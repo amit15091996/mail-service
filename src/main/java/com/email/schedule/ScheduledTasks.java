@@ -1,6 +1,7 @@
 package com.email.schedule;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import javax.mail.MessagingException;
 
@@ -21,7 +22,7 @@ public class ScheduledTasks {
 	}
 
 	@Scheduled(fixedRate = 5000) // 5 sec
-	public void readUnreadEmails() throws MessagingException, IOException {
+	public void readUnreadEmails() throws MessagingException, IOException, ParseException {
 		System.out.println("scheduler");
 		emailReadService.replyToEmails();
 	}

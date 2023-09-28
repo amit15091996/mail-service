@@ -21,9 +21,9 @@ public class EmailController {
 
 	@PostMapping("/send-email")
 	public void sendEmail(@RequestBody EmailRequest emailRequest) {
-		String recipient = "amitdewangan199@gmail.com";
-		String subject = emailRequest.getSubject();
-		String body = emailRequest.getBody()+emailRequest.getRecipient();
+		String recipient = emailRequest.getRecipient();
+		String subject = "Check Mail";
+		String body = emailRequest.getBody();
 
 		emailService.sendEmail(recipient, subject, body);
 	}

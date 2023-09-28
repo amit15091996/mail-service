@@ -1,9 +1,14 @@
 package com.email.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class EmailResponse {
@@ -13,8 +18,21 @@ public class EmailResponse {
 	private Long id;
 	private String recipient;
 	private String subject;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "sent_date")
+	private Date sentDate;
+
 	private String body;
 	private boolean sentSuccessfully;
+
+	public Date getSentDate() {
+		return sentDate;
+	}
+
+	public void setSentDate(Date sentDate) {
+		this.sentDate = sentDate;
+	}
 
 	public Long getId() {
 		return id;
