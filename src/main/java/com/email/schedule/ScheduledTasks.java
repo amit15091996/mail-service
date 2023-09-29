@@ -17,13 +17,13 @@ public class ScheduledTasks {
 	@Autowired
 	private EmailReaderService emailReadService;
 
-	public ScheduledTasks(EmailReaderService emailReadService) {
-		this.emailReadService = emailReadService;
-	}
+//	public ScheduledTasks(EmailReaderService emailReadService) {
+//		this.emailReadService = emailReadService;
+//	}
 
 	@Scheduled(fixedRate = 5000) // 5 sec
 	public void readUnreadEmails() throws MessagingException, IOException, ParseException {
 		System.out.println("scheduler");
-		emailReadService.replyToEmails();
+//		emailReadService.replyToEmails();
 	}
 }

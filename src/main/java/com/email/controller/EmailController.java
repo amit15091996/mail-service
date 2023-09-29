@@ -21,17 +21,16 @@ public class EmailController {
 
 	@PostMapping("/send-email")
 	public void sendEmail(@RequestBody EmailRequest emailRequest) {
-		String recipient = emailRequest.getRecipient();
-		String subject = "Check Mail";
-		String body = emailRequest.getBody();
 
-		emailService.sendEmail(recipient, subject, body);
+		String email = emailRequest.getEmail();
+		String name = emailRequest.getName();
+		emailService.sendEmail(name, email);
 	}
 
 	@GetMapping("/read-emails")
 	public String readEmails() {
 		try {
-			emailReaderService.replyToEmails();
+			emailReaderService.readEmails();
 			return "Emails processed successfully.";
 		} catch (Exception e) {
 			e.printStackTrace();
