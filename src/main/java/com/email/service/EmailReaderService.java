@@ -16,13 +16,14 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
 import javax.mail.search.SubjectTerm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -93,7 +94,7 @@ public class EmailReaderService {
 //			System.out.println("org : " + org);
 
 			String replyContent = loadHtmlTemplate("email-tem.html");
-//			replyContent = replyContent.replace("{{name}}", extractedEmail);
+			replyContent = replyContent.replace("{{name}}", extractedEmail);
 			System.out.println("ReplyContent : " + replyContent);
 
 			String replySubject = "RE: " + message.getSubject();
@@ -143,11 +144,13 @@ public class EmailReaderService {
 
 	public void sendResponse(String to, String subject, String body) {
 		try {
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(to);
-			message.setSubject(subject);
-			message.setText(body);
-			emailSender.send(message);
+			MimeMessage mimeMessage = emailSender.createMimeMessage();
+
+			mimeMessage.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(to));
+			mimeMessage.setSubject(subject);
+			mimeMessage.setText(body, "UTF-8", "text/html");
+
+			emailSender.send(mimeMessage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
